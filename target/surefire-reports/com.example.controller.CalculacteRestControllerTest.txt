@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: com.example.controller.CalculacteRestControllerTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 0.032 sec <<< FAILURE!
+com.example.controller.CalculacteRestControllerTest.testCalculate()  Time elapsed: 0.03 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.example.controller.CalculacteRestControllerTest.testCalculate(CalculacteRestControllerTest.java:23)
+
+com.example.controller.CalculacteRestControllerTest.testCalculateWithDifferentDates()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.example.controller.CalculacteRestControllerTest.testCalculateWithDifferentDates(CalculacteRestControllerTest.java:33)
+
+com.example.controller.CalculacteRestControllerTest.testCalculateWithWeekends()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.example.controller.CalculacteRestControllerTest.testCalculateWithWeekends(CalculacteRestControllerTest.java:43)
+
+com.example.controller.CalculacteRestControllerTest.testCalculateWithHolidays()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.example.controller.CalculacteRestControllerTest.testCalculateWithHolidays(CalculacteRestControllerTest.java:53)
+
