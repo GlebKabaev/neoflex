@@ -10,8 +10,6 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
-import com.example.model.VacationData;
-
 @Service
 public class CalculateService {
     private Set<LocalDate> getHolidays(int year) {
@@ -32,19 +30,19 @@ public class CalculateService {
         return holidays;
     }
 
-    public double calculate(VacationData vacationData) {
-        return (vacationData.getAverageSalary() / 29.3) * vacationData.getVacationDays();
-    }
-
     public double calculate(double averageSalary, int vacationDays) {
+        if (averageSalary<0 ||vacationDays<0 ){
+            throw new IllegalArgumentException("Некорректные входные данные: проверьте зарплату количество дней");
+        }
         return (averageSalary / 29.3) * vacationDays;
     }
 
     public double calculate(double averageSalary, LocalDate startDate, LocalDate endDate) {
+        if (!isValid(averageSalary, startDate, endDate)) {
+            throw new IllegalArgumentException("Некорректные входные данные: проверьте зарплату и даты");
+        }
         int workingDays = countWorkingDays(startDate, endDate);
-        double rawResult = (averageSalary / 29.3) * workingDays;
-
-        
+        double rawResult = calculate(averageSalary, workingDays);
         BigDecimal roundedResult = new BigDecimal(rawResult).setScale(2, RoundingMode.HALF_UP);
         return roundedResult.doubleValue();
     }
@@ -65,5 +63,9 @@ public class CalculateService {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
         return !(dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY
                 || getHolidays(date.getYear()).contains(date));
+    }
+
+    private boolean isValid(double averageSalary, LocalDate startDate, LocalDate endDate) {
+        return !(startDate.isAfter(endDate) || averageSalary < 0);
     }
 }
