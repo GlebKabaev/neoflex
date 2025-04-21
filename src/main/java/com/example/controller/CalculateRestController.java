@@ -13,20 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.service.CalculateService;
 
 @RestController
-public class CalculacteRestController {
-    CalculateService calculacteService;
+public class CalculateRestController {
+    private CalculateService calculacteService;
 
-    CalculacteRestController(CalculateService calculacteService) {
+    public CalculateRestController(CalculateService calculacteService) {
         this.calculacteService = calculacteService;
     }
 
     @GetMapping("/calculate")
-    public double calculacte(@RequestParam double averageSalary,
-            @RequestParam String startDate,
-            @RequestParam String endDate) {
-        LocalDate start = LocalDate.parse(startDate);
-        LocalDate end = LocalDate.parse(endDate);
-        return calculacteService.calculate(averageSalary, start, end);
+    public double calculate(@RequestParam double averageSalary,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @RequestParam(required = false) Integer vacationDays) {
+        return calculacteService.calculate(averageSalary, startDate, endDate, vacationDays);
     }
 
     @ExceptionHandler({ IllegalArgumentException.class, DateTimeParseException.class })
