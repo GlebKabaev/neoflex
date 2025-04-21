@@ -57,4 +57,64 @@ public class CalculacteRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("0.0"));
     }
+
+    @Test
+    public void testCalculateWithVacationDays() throws Exception {
+        mockMvc.perform(get("/calculate")
+                .param("averageSalary", "60000")
+                .param("vacationDays", "10"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("20477.82"));
+    }
+
+    @Test
+    public void testCalculateWithNegativeSalary() throws Exception {
+        mockMvc.perform(get("/calculate")
+                .param("averageSalary", "-1000")
+                .param("vacationDays", "5"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testStartDateAfterEndDate() throws Exception {
+        mockMvc.perform(get("/calculate")
+                .param("averageSalary", "40000")
+                .param("startDate", "2024-06-10")
+                .param("endDate", "2024-06-01"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testMissingParameters() throws Exception {
+        mockMvc.perform(get("/calculate"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testInvalidDateFormat() throws Exception {
+        mockMvc.perform(get("/calculate")
+                .param("averageSalary", "30000")
+                .param("startDate", "2024-13-01")
+                .param("endDate", "2024-06-03"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testZeroVacationDays() throws Exception {
+        mockMvc.perform(get("/calculate")
+                .param("averageSalary", "30000")
+                .param("vacationDays", "0"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("0.0"));
+    }
+
+    @Test
+    public void testZeroSalary() throws Exception {
+        mockMvc.perform(get("/calculate")
+                .param("averageSalary", "0")
+                .param("vacationDays", "5"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("0.0"));
+    }
+
 }

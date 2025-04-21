@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CalculateServiceTest {
 
-    private final CalculateService calculateService = new CalculateService();
+    private final CalculateService calculateService = new CalculateService(new HolidayService());
 
     @Test
     public void testCalculateWithVacationData() {
